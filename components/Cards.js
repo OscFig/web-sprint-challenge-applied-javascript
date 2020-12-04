@@ -37,7 +37,7 @@ cardDiv.appendChild(authorDiv);
 authorDiv.appendChild(imgContainer);
 imgContainer.appendChild(img);
 authorDiv.appendChild(span);
-
+document.querySelector('.cards-container').appendChild(cardDiv)
 //              -classList-
 cardDiv.classList.add('card');
 headDiv.classList.add('headline');
@@ -45,17 +45,17 @@ authorDiv.classList.add('author');
 img.classList.add('img-container');
 
 //              -textContent-
-headDiv.textContent = info;
-span.textContent = info;
+headDiv.textContent = info.headline;
+span.textContent = info.authorName;
 
 //              -imgSrc-
-img.src = info;
+img.src = info.authorPhoto;
 
 //              -eventListener-
 cardDiv.addEventListener('click', () => {
     console.log(headDiv);
 })
-
+// console.log(cardDiv)
 //              -return-
 return cardDiv;
 }
@@ -63,6 +63,17 @@ return cardDiv;
 axios
 .get('https://lambda-times-api.herokuapp.com/articles')
 .then((resolve) => {
-    console.log(resolve)
-    const data = resolve;
+    const bootstrap = resolve.data.articles.bootstrap;
+    const javascript = resolve.data.articles.javascript;
+    const jquery = resolve.data.articles.jquery;
+    const node = resolve.data.articles.node;
+    const technology = resolve.data.articles.technology;
+    const topicArray = [bootstrap,javascript, jquery, node,technology, topicArray];
+    topicArray.forEach((topic) => {
+        // console.log(topic)
+        topic.forEach((article) => {
+            console.log(article)
+            cardMaker(article)
+        })
+    })
 })
